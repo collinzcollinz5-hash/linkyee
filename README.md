@@ -16,11 +16,12 @@
 
 </div>
 
-[中文介紹](https://medium.com/zrealm-robotic-process-automation/linkyee-%E4%BD%BF%E7%94%A8-github-pages-%E5%BF%AB%E9%80%9F%E5%85%8D%E8%B2%BB%E5%BB%BA%E7%AB%8B%E5%80%8B%E4%BA%BA%E9%A1%9E-linktree-%E9%80%A3%E7%B5%90%E9%A0%81%E9%9D%A2-70aeddb1fd9b)
+[中文介紹](https://zhgchg.li/posts/70aeddb1fd9b/)
 
-- [Features](https://github.com/ZhgChgLi/linkyee/edit/main/README.md#features)
-- [Get Started – Deploy on GitHub Pages](https://github.com/ZhgChgLi/linkyee/edit/main/README.md#get-started--deploy-on-github-pages)
-- [Configuration & Customized & Automatic Redeployment](https://github.com/ZhgChgLi/linkyee/edit/main/README.md#configuration)
+- [Features](https://github.com/ZhgChgLi/linkyee/tree/main/README.md#features)
+- [Showcase✨](https://github.com/ZhgChgLi/linkyee/tree/main#showcase-)
+- [Get Started – Deploy on GitHub Pages](https://github.com/ZhgChgLi/linkyee/tree/main/README.md#get-started--deploy-on-github-pages)
+- [Configuration & Customized & Automatic Redeployment](https://github.com/ZhgChgLi/linkyee/tree/main/README.md#configuration)
 - [Custom Domain](https://en.zhgchg.li/posts/483af5d93297/)
 
 ## Features
