@@ -10,13 +10,13 @@
   --sans: 'Nunito', 'Quicksand', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 }
 
-/* Dark mode — auto-switches via system appearance.
+/* Dark mode. Auto-switches via system appearance unless pinned via
+   `color_scheme: light|dark` in config.yml.
    Sepia-on-charcoal: the warm pastel theme keeps its friendliness by
    shifting cream → cream-on-cocoa rather than turning blue-gray. The
-   accent stays terracotta (slightly brighter on dark) so the friendly
-   pop carries over. */
+   accent stays terracotta (slightly brighter on dark). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.scheme-light) {
     --bg: #1c1814;
     --paper: #2a231c;
     --fg: #f5e9d8;
@@ -26,6 +26,16 @@
     --accent-soft: #3d2a22;
     --shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
   }
+}
+:root.scheme-dark {
+  --bg: #1c1814;
+  --paper: #2a231c;
+  --fg: #f5e9d8;
+  --muted: #b3a48d;
+  --rule: #3a3128;
+  --accent: #ff9b75;
+  --accent-soft: #3d2a22;
+  --shadow: 0 2px 0 rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

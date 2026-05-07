@@ -135,52 +135,32 @@ a {
    Surfaces use elevated grays (not pure #000) so cards stay distinguishable
    from the body and OLED panels don't band. Body text is #e6edf3 rather
    than pure white for less eye-strain at long reading times. */
+/* Auto-switch dark via OS, unless `color_scheme: light` pinned in config.yml.
+   Each rule's selector is prefixed with :root:not(.scheme-light) so the
+   forced-light class neutralises the entire block. */
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #0d1117;
-    color: #e6edf3;
-  }
-
-  a {
-    color: #e6edf3;
-  }
-
-  .profile-pic {
-    border-color: #30363d;
-  }
-
-  .description {
-    color: #9da7b1;
-  }
-
-  .link-button {
-    background-color: #161b22;
-    color: #e6edf3;
-    border: 1px solid #21262d;
-  }
-
-  .link-button:hover {
-    background-color: #21262d;
-    border-color: #30363d;
-  }
-
-  .link-button:focus-visible {
-    outline: 2px solid #58a6ff;
-    outline-offset: 2px;
-  }
-
-  .icon-button {
-    color: #e6edf3;
-  }
-
-  .footer {
-    color: #7d8590;
-  }
-
-  .link-button-text {
-    color: #7d8590;
-  }
+  :root:not(.scheme-light) body            { background-color: #0d1117; color: #e6edf3; }
+  :root:not(.scheme-light) a               { color: #e6edf3; }
+  :root:not(.scheme-light) .profile-pic    { border-color: #30363d; }
+  :root:not(.scheme-light) .description    { color: #9da7b1; }
+  :root:not(.scheme-light) .link-button    { background-color: #161b22; color: #e6edf3; border: 1px solid #21262d; }
+  :root:not(.scheme-light) .link-button:hover { background-color: #21262d; border-color: #30363d; }
+  :root:not(.scheme-light) .link-button:focus-visible { outline: 2px solid #58a6ff; outline-offset: 2px; }
+  :root:not(.scheme-light) .icon-button    { color: #e6edf3; }
+  :root:not(.scheme-light) .footer         { color: #7d8590; }
+  :root:not(.scheme-light) .link-button-text { color: #7d8590; }
 }
+/* `color_scheme: dark` — force the same dark palette regardless of OS. */
+:root.scheme-dark body            { background-color: #0d1117; color: #e6edf3; }
+:root.scheme-dark a               { color: #e6edf3; }
+:root.scheme-dark .profile-pic    { border-color: #30363d; }
+:root.scheme-dark .description    { color: #9da7b1; }
+:root.scheme-dark .link-button    { background-color: #161b22; color: #e6edf3; border: 1px solid #21262d; }
+:root.scheme-dark .link-button:hover { background-color: #21262d; border-color: #30363d; }
+:root.scheme-dark .link-button:focus-visible { outline: 2px solid #58a6ff; outline-offset: 2px; }
+:root.scheme-dark .icon-button    { color: #e6edf3; }
+:root.scheme-dark .footer         { color: #7d8590; }
+:root.scheme-dark .link-button-text { color: #7d8590; }
 /* "Latest" link variant — pinned highlight + truncated long titles */
 .link-button.link-latest {
   position: relative;
@@ -215,11 +195,8 @@ a {
   line-height: 1.35;
 }
 @media (prefers-color-scheme: dark) {
-  .link-button.link-latest {
-    border-color: rgba(255, 255, 255, 0.16);
-  }
-  .link-latest-badge {
-    background: #58a6ff;
-    color: #0d1117;
-  }
+  :root:not(.scheme-light) .link-button.link-latest { border-color: rgba(255, 255, 255, 0.16); }
+  :root:not(.scheme-light) .link-latest-badge { background: #58a6ff; color: #0d1117; }
 }
+:root.scheme-dark .link-button.link-latest { border-color: rgba(255, 255, 255, 0.16); }
+:root.scheme-dark .link-latest-badge { background: #58a6ff; color: #0d1117; }

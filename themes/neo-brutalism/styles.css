@@ -13,29 +13,39 @@
   --display: 'Archivo Black', 'Space Grotesk', 'Inter', sans-serif;
 }
 
-/* Dark mode — auto-switches via system appearance.
+/* Dark mode. Auto-switches via system appearance unless pinned via
+   `color_scheme: light|dark` in config.yml.
    Brutalism on dark needs visible shadows: the trademark black drop-shadow
    disappears against a dark page, so on dark the shadow becomes a bright
    neon (cyan) and the body color is a richer charcoal so the cards still
    pop. The signature primary palette keeps its identity. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.scheme-light) {
     --bg: #14141a;
     --fg: #f5f5f5;
     --muted: #b8b8b8;
     --card: #1f1f24;
     --shadow: #4ecdc4;
   }
-  /* Card text needs to stay readable — accent-fill cards (e.g. .link-latest
-     using --c2 yellow) keep dark text intentionally for poster-style impact. */
-  .link-button.link-latest {
-    color: #14141a;
-  }
-  .link-latest-badge {
+  :root:not(.scheme-light) .link-button.link-latest { color: #14141a; }
+  :root:not(.scheme-light) .link-latest-badge {
     background: #14141a;
     color: var(--c2);
     border-color: #14141a;
   }
+}
+:root.scheme-dark {
+  --bg: #14141a;
+  --fg: #f5f5f5;
+  --muted: #b8b8b8;
+  --card: #1f1f24;
+  --shadow: #4ecdc4;
+}
+:root.scheme-dark .link-button.link-latest { color: #14141a; }
+:root.scheme-dark .link-latest-badge {
+  background: #14141a;
+  color: var(--c2);
+  border-color: #14141a;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

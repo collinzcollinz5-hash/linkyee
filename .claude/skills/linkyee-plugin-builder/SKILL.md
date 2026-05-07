@@ -104,7 +104,43 @@ If the value is missing, **read the stderr output** — the new
 `scaffold.rb` swallows plugin failures but logs them clearly. Do not
 guess; fix the underlying error.
 
-### 7. Report back
+### 7. Secrets — non-negotiable
+
+If the plugin needs an API key, personal access token, OAuth token,
+or any other credential:
+
+- **Never** put the secret value in `config.yml`. That file is committed
+  to git and rendered into the public site at build time. Anything in it
+  is public, forever, including in old commits.
+- **Never** hardcode the secret in the plugin's `.rb` file. Same problem.
+- **Always** read it from `ENV`:
+  ```ruby
+  token = ENV["MEDIUM_TOKEN"]
+  return [] if token.nil? || token.empty?
+  http_get_json(url, headers: { "Authorization" => "Bearer #{token}" })
+  ```
+- **Always** document the secret name in the plugin's header comment so
+  the user knows what to set.
+- **Always** tell the user how to wire it through, in three steps:
+  1. **Repo secret**: GitHub → repo → *Settings → Secrets and variables
+     → Actions → New repository secret*. Name it (e.g. `MEDIUM_TOKEN`),
+     paste value.
+  2. **Workflow env**: edit `.github/workflows/build.yml`, add an `env:`
+     block to the `Deploy` step:
+     ```yaml
+     - name: Deploy
+       env:
+         MEDIUM_TOKEN: ${{ secrets.MEDIUM_TOKEN }}
+       run: bash deploy.sh
+     ```
+  3. **Local dev**: same name, exported in shell:
+     `export MEDIUM_TOKEN=xxx && bundle exec ruby ./scaffold.rb`
+
+If the user asks you to "just paste the token in config.yml for now",
+**refuse and explain why**. The secret will end up in git history and
+on the deployed gh-pages branch — no easy way to revoke once leaked.
+
+### 8. Report back
 
 Tell the user:
 

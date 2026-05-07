@@ -14,10 +14,27 @@ theme: glassmorphism
 # HTML <html lang> attribute
 lang: "en"
 
+# Force a color scheme regardless of the visitor's system appearance:
+#   auto  — follow OS (default; the page auto-switches between light/dark)
+#   light — always render light mode
+#   dark  — always render dark mode
+# Note: dark-first themes (e.g. terminal-retro) ignore "light" — their
+# whole identity is the dark palette.
+color_scheme: auto
+
 # -----------------------------------------------------------------------------
 # Plugins — every built-in plugin is shown below as a working example.
 # Remove the ones you don't need. Output is referenced as {{ vars.PluginName }}.
 # Full reference: plugins/README.md
+#
+# ⚠️ SECRETS — never put API keys / tokens in this file. config.yml is
+# committed to git and rendered into the publicly served site. If a plugin
+# needs auth (a personal access token, Steam Web API key, weather API
+# token, ...), set it as a GitHub Actions repository secret
+# (Settings → Secrets and variables → Actions → New repository secret),
+# expose it to the build via `env:` in `.github/workflows/build.yml`,
+# and read it from the plugin with ENV['MY_SECRET']. See plugins/README.md
+# for the canonical pattern.
 # -----------------------------------------------------------------------------
 plugins:
   # Star counts for one or more GitHub repos.

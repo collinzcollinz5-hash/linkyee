@@ -10,11 +10,13 @@
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Dark mode — auto-switches via system appearance.
+/* Dark mode. By default auto-switches via system appearance, but the user
+   can pin it via `color_scheme: light|dark` in config.yml — see the
+   :root.scheme-dark block below for the forced-dark override.
    Same monochrome restraint, just inverted with slightly elevated grays so
    the hairline rules and hover states are still visible against pure black. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.scheme-light) {
     --bg: #0d0d0d;
     --fg: #ededed;
     --muted: #8a8a8a;
@@ -22,6 +24,14 @@
     --hover: #1a1a1a;
     --accent: #ededed;
   }
+}
+:root.scheme-dark {
+  --bg: #0d0d0d;
+  --fg: #ededed;
+  --muted: #8a8a8a;
+  --rule: #262626;
+  --hover: #1a1a1a;
+  --accent: #ededed;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

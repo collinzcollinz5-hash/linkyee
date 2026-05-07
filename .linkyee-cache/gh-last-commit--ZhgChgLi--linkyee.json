@@ -1,1 +1,1 @@
-{"sha":"480b83e","date":"2026-05-07","message":"Bump plugin cache TTL from 1 hour to 1 day"}
+{"sha":"1cf39d1","date":"2026-05-07","message":"Add newsprint theme; rework plugin cache to try-real-first / fallback…"}

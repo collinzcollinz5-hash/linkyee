@@ -214,17 +214,44 @@ empty = { "count" => 0, "label" => "" }
 return empty unless res.is_a?(Net::HTTPSuccess)
 ```
 
-### 4. Reading a secret / token
+### 4. Reading a secret / token (the only safe way)
 
-Plugins run in the GitHub Actions build environment, so use environment
-variables (set them as repository secrets and pass through in
-`build.yml`):
+> ⚠️ **Never put credentials in `config.yml` or in a plugin's `.rb`
+> source.** `config.yml` is committed to git and rendered into the
+> public gh-pages site; once a token lands in commit history, treat it
+> as compromised.
 
-```ruby
-token = ENV["MY_PLUGIN_TOKEN"]
-return [] if token.nil? || token.empty?
-http_get_json(url, headers: { "Authorization" => "Bearer #{token}" })
-```
+The only acceptable storage for an API key, PAT, OAuth token, or
+similar is a **GitHub Actions repository secret**, exposed to the build
+via env-var, read from `ENV` inside the plugin.
+
+**Three-step setup:**
+
+1. **Add the repo secret** — GitHub → your repo → *Settings → Secrets
+   and variables → Actions → New repository secret*. Name it
+   (e.g. `MEDIUM_TOKEN`), paste the value.
+2. **Pass it through the workflow** — edit `.github/workflows/build.yml`
+   and add an `env:` block to the `Deploy` step:
+   ```yaml
+   - name: Deploy
+     env:
+       MEDIUM_TOKEN: ${{ secrets.MEDIUM_TOKEN }}
+     run: bash deploy.sh
+   ```
+3. **Read it in the plugin** — and bail gracefully if missing:
+   ```ruby
+   token = ENV["MEDIUM_TOKEN"]
+   return [] if token.nil? || token.empty?
+   http_get_json(url, headers: { "Authorization" => "Bearer #{token}" })
+   ```
+
+For local development, export the same env var in your shell before
+running `bundle exec ruby ./scaffold.rb`. Do **not** check it into
+`.envrc` / `.env` files that might be committed; if you use `direnv`,
+add `.envrc` to `.gitignore`.
+
+Document the secret name in the plugin file's header comment so the
+next maintainer knows what to provision.
 
 ---
 

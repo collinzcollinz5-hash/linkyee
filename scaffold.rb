@@ -108,6 +108,7 @@ end
 # footer, tagline, etc.
 now = Time.now
 settings["last_modified_at"] = now.strftime("%Y-%m-%dT%H:%M:%S%z")
+settings["color_scheme"] ||= "auto"   # auto | light | dark
 settings["year"] = now.year.to_s
 settings["month"] = now.strftime("%m")
 settings["day"] = now.strftime("%d")

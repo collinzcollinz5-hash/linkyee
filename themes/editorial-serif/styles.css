@@ -9,11 +9,12 @@
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 }
 
-/* Dark mode — auto-switches via system appearance.
+/* Dark mode. Auto-switches via system appearance unless the user pins
+   `color_scheme: light|dark` in config.yml (see :root.scheme-dark below).
    Warm dark paper (charcoal-ink) with a coral-shifted accent so the
    editorial red-on-cream identity carries over without going muddy. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.scheme-light) {
     --bg: #14110d;
     --fg: #f3ecdf;
     --muted: #a59a86;
@@ -21,6 +22,14 @@
     --hover: #1f1812;
     --accent: #f08585;
   }
+}
+:root.scheme-dark {
+  --bg: #14110d;
+  --fg: #f3ecdf;
+  --muted: #a59a86;
+  --rule: #322a22;
+  --hover: #1f1812;
+  --accent: #f08585;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

@@ -1,8 +1,9 @@
 /* terminal-retro is intentionally dark-first — the green-on-black CRT
    aesthetic IS the design. There is no @media (prefers-color-scheme: dark)
    block because the base palette already serves both system modes; a
-   "light terminal" variant would feel inauthentic to the genre. If you
-   want a light variant, fork the theme and swap --bg / --fg. */
+   "light terminal" variant would feel inauthentic to the genre.
+   `color_scheme: light` in config.yml has no effect on this theme. If you
+   want a light variant, fork and swap --bg / --fg. */
 :root {
   --bg: #0c0f0a;
   --window-bg: #11150f;

@@ -103,6 +103,33 @@ Every theme must work in both system appearances. The user does not click a butt
 - Per-rule overrides are acceptable when only a few properties change (e.g. `default` theme), but the vars approach scales better.
 - `terminal-retro` is the **dark-first reference**: its base palette (green-on-black CRT) already works for both system modes, so it has no `@media` block at all. A short comment in `styles.css` explains why. If a new theme is intentionally dark-only (terminal, hacker, neon, vaporwave-dark), do the same — don't fake a light mode that betrays the genre.
 
+**`color_scheme` override (required for new themes):**
+
+Users can pin the page to a specific mode via `color_scheme: auto | light | dark` in `config.yml`. The theme must respect this — the system-default auto-switch is not enough. Wire it up like this:
+
+1. **`index.html`** — add the scheme class on `<html>`:
+   ```liquid
+   <html lang="{{ lang }}"{% if color_scheme == "light" %} class="scheme-light"{% elsif color_scheme == "dark" %} class="scheme-dark"{% endif %}>
+   ```
+   For `auto`, no class is added; the @media query fires normally.
+
+2. **`styles.css`** — gate the dark block on `:not(.scheme-light)` and add a `.scheme-dark` block that duplicates the dark vars. With CSS variables this is two short blocks:
+   ```css
+   :root { /* light vars */ }
+
+   /* Auto + OS=dark, OR explicit "dark" */
+   @media (prefers-color-scheme: dark) {
+     :root:not(.scheme-light) { /* dark vars */ }
+   }
+   /* Forced "dark" — beats system preference */
+   :root.scheme-dark { /* same dark vars */ }
+   ```
+   Yes, the dark vars are duplicated. There is no clean CSS-only way to avoid it short of `light-dark()` (Baseline 2024 — fine to use if you want a single source of truth and don't need IE-era support). For per-rule themes (no vars, like `default`), prefix every dark selector with `:root:not(.scheme-light)` and duplicate every rule under `:root.scheme-dark`. Mechanical but verbose.
+
+3. **Verification** — set `color_scheme: light` in `config.yml`, rebuild, force your OS into dark mode. The page should stay light. Set `color_scheme: dark`, force OS to light. Page should stay dark. Set `color_scheme: auto`, toggle OS. Page should swap live.
+
+**Dark-first themes (e.g. CRT, neon)** can ignore `color_scheme: light` — declare this in a CSS comment as `terminal-retro` does. Don't manufacture a light variant that betrays the genre.
+
 **Verification (do not skip):**
 
 After your edits, before declaring the theme done:
