@@ -59,22 +59,24 @@ class GithubProfilePlugin < Plugin
     parse_compact_int(span&.text)
   end
 
-  # Try the repositories tab page; the active tab counter has the total.
-  # Falls back to 0 if not found (e.g. layout change).
+  # Scrape the public repo count from the user's profile page. The most
+  # reliable signal across both /users/ and /orgs/ layouts is the `<meta
+  # name="description">` line which always contains a phrase like
+  #   "ZRealm has 29 repositories available."
+  # Tab counters and side filters move/rename across GitHub redesigns;
+  # the meta string has been stable for years.
   def repos_count(user)
-    res = http_get("https://github.com/#{user}?tab=repositories",
+    res = http_get("https://github.com/#{user}",
                    headers: { 'User-Agent' => 'Mozilla/5.0' })
     return 0 unless res.is_a?(Net::HTTPSuccess)
 
     doc = Nokogiri::HTML(res.body)
+    desc = doc.at_xpath('//meta[@name="description"]')&.[]('content').to_s
+    if (m = desc.match(/has\s+([\d,]+)\s+repositor/i))
+      return parse_compact_int(m[1])
+    end
 
-    # Pattern A: side filter "Repositories: N"
-    label = doc.xpath("//*[contains(text(), 'Repositories')]")
-                .map { |n| n.text[/[\d,]+/] }
-                .compact.first
-    return parse_compact_int(label) if label
-
-    # Pattern B: tab counter
+    # Fallbacks if GitHub ever drops the meta string.
     counter = doc.at_css('a[data-tab-item="repositories"] span.Counter') ||
               doc.at_css('a[href$="?tab=repositories"] span.Counter')
     parse_compact_int(counter&.text)

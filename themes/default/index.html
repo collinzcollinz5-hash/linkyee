@@ -40,6 +40,7 @@
   <meta name="theme-color" content="#ffffff">
 
 
+  <link rel="stylesheet" href="./fontawesome/css/all.min.css?v={{ last_modified_at }}" />
   <link rel="stylesheet" href="./styles.css?v={{ last_modified_at }}" />
 </head>
 <body>
@@ -76,7 +77,7 @@
       <div class="copyright">{{ copyright }}</div>
     </footer>
   </div>
-  <script src="fontawesome/js/all.js?v={{ last_modified_at }}" data-auto-replace-svg="nest"></script>
+  {% comment %}Font Awesome is loaded via CSS above (faster, no JS replacement step){% endcomment %}
   {% if google_analytics_id %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>

@@ -1,1 +1,1 @@
-{"sha":"1cf39d1","date":"2026-05-07","message":"Add newsprint theme; rework plugin cache to try-real-first / fallback…"}
+{"sha":"73bd4ad","date":"2026-05-07","message":"color_scheme override (auto/light/dark); secrets must be repo env vars"}
