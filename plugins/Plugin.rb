@@ -176,9 +176,14 @@ class Plugin
     './.linkyee-cache'
   end
 
+  # Filenames use a human-readable slug of the key (so `ls .linkyee-cache/`
+  # tells you what each file is) instead of an opaque hash. Unsafe chars
+  # collapse to `--`; the result is capped at 200 chars to stay below
+  # filesystem limits.
   def self.disk_cache_path(key)
-    require 'digest'
-    File.join(disk_cache_dir, "#{Digest::SHA1.hexdigest(key)}.json")
+    slug = key.gsub(/[^A-Za-z0-9._@-]+/, '--')
+    slug = slug[0, 200]
+    File.join(disk_cache_dir, "#{slug}.json")
   end
 
   private

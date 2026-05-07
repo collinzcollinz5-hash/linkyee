@@ -21,10 +21,10 @@
 ## Table of contents
 
 - [Why linkyee?](#why-linkyee)
-- [Get Started – Deploy on GitHub Pages](#get-started--deploy-on-github-pages)
 - [Configuration](#configuration)
 - [Themes 🎨](#themes-)
 - [Plugins 🔌](#plugins-)
+- [Get Started – Deploy on GitHub Pages](#get-started--deploy-on-github-pages)
 - [Local testing](#local-testing)
 - [Custom Domain](#custom-domain-)
 - [Showcase ✨](#showcase-)
@@ -50,51 +50,6 @@
 [**If this project has helped you, feel free to sponsor me a cup of coffee, thank you.**](https://www.paypal.com/ncp/payment/CMALMPT8UUTY2)
 
 Feel free to open an issue or submit a fix/contribution via pull request. :)
-
----
-
-## Get Started – Deploy on GitHub Pages
-### About Github Pages
-> GitHub Pages is a free hosting service provided by GitHub, designed for creating and publishing websites directly from a GitHub repository. It allows developers, designers, and anyone with a GitHub account to host personal, project, or organizational websites without needing external hosting services. GitHub Pages works seamlessly with GitHub repositories, automatically generating a static website whenever new content is pushed.
-
-#### Step 1. Click the “Use this template” button at the top-right corner of the [linkyee](https://github.com/ZhgChgLi/linkyee) Template Repo -> “Create a new repository”:
-![image](https://github.com/user-attachments/assets/4b88da62-df4b-4f3b-a22c-e78b7527a92d)
-
-#### Step 2. Check “Include all branches,” enter your desired GitHub Pages repo name, and click “Create repository” once finished:
-![image](https://github.com/user-attachments/assets/d3611204-7507-41a1-8221-707200a3e269)
-
-> The GitHub Pages repo name will affect the access URL. If you enter `your-username.github.io` as the Repo Name, that will be the direct URL to your GitHub Pages site.
-> If you already have a `your-username.github.io` repo, the GitHub Pages URL will be `your-username.github.io/Repo-Name`.
-
-#### Wait for the fork to complete. You might encounter deployment errors during the initial setup due to forked repo permission issues. Let’s proceed with the steps to adjust this.
-![image](https://github.com/user-attachments/assets/038fac9e-83eb-4f2f-ba9a-88712b4af022)
-
-#### Step 4. Go to Settings -> Actions -> General, ensure the following options are selected:
-![image](https://github.com/user-attachments/assets/6851c4e6-9466-4800-862f-e9e5e5b65b11)
-
-- Actions permissions: `Allow all actions and reusable workflows`
-- Workflow permissions: `Read and write permissions`
-
-After selecting, click the Save button to save your changes.
-
-#### Step 5. Go to Settings -> Pages and ensure the selected branch for GitHub Pages is set to “gh-pages”:
-![image](https://github.com/user-attachments/assets/1802bc78-4615-4d29-b180-9c84f3fb8d6d)
-
-> 	The message `Your site is live at: XXXX` above is your public GitHub Pages access URL.
-
-#### Step 6. Go to Settings -> Actions and wait for the first deployment to complete:
-![image](https://github.com/user-attachments/assets/e57336ef-2f35-4455-abc0-76dce07470ee)
-
-#### Step 7. Access the GitHub Pages URL to ensure the fork was successful:
-![image](https://github.com/user-attachments/assets/023c39f7-9351-4175-8c9f-5eb42e2ecdb9)
-
-> Congratulations! Deployment successful. You can now modify the configuration files with your own data. 🎉🎉🎉
-
-#### Please note that after each files modification, you need to wait for GitHub Actions to complete the `Automatic build` and `pages build and deployment` tasks.
-
-![image](https://github.com/user-attachments/assets/0ba637cc-3bb6-4458-a076-5f754c7429b3)
-
-Refresh the page for the changes to take effect. 🚀
 
 ---
 
@@ -255,6 +210,51 @@ The skill will:
 ### Developer wiki
 
 For the full plugin contract — base-class helpers, common patterns (HTTP, JSON, scrape, cache), Liquid rendering rules, and debugging tips — read **[`plugins/README.md`](./plugins/README.md)**. It's the canonical reference the AI skill loads when it generates a plugin.
+
+---
+
+## Get Started – Deploy on GitHub Pages
+### About Github Pages
+> GitHub Pages is a free hosting service provided by GitHub, designed for creating and publishing websites directly from a GitHub repository. It allows developers, designers, and anyone with a GitHub account to host personal, project, or organizational websites without needing external hosting services. GitHub Pages works seamlessly with GitHub repositories, automatically generating a static website whenever new content is pushed.
+
+#### Step 1. Click the “Use this template” button at the top-right corner of the [linkyee](https://github.com/ZhgChgLi/linkyee) Template Repo -> “Create a new repository”:
+![image](https://github.com/user-attachments/assets/4b88da62-df4b-4f3b-a22c-e78b7527a92d)
+
+#### Step 2. Check “Include all branches,” enter your desired GitHub Pages repo name, and click “Create repository” once finished:
+![image](https://github.com/user-attachments/assets/d3611204-7507-41a1-8221-707200a3e269)
+
+> The GitHub Pages repo name will affect the access URL. If you enter `your-username.github.io` as the Repo Name, that will be the direct URL to your GitHub Pages site.
+> If you already have a `your-username.github.io` repo, the GitHub Pages URL will be `your-username.github.io/Repo-Name`.
+
+#### Wait for the fork to complete. You might encounter deployment errors during the initial setup due to forked repo permission issues. Let’s proceed with the steps to adjust this.
+![image](https://github.com/user-attachments/assets/038fac9e-83eb-4f2f-ba9a-88712b4af022)
+
+#### Step 4. Go to Settings -> Actions -> General, ensure the following options are selected:
+![image](https://github.com/user-attachments/assets/6851c4e6-9466-4800-862f-e9e5e5b65b11)
+
+- Actions permissions: `Allow all actions and reusable workflows`
+- Workflow permissions: `Read and write permissions`
+
+After selecting, click the Save button to save your changes.
+
+#### Step 5. Go to Settings -> Pages and ensure the selected branch for GitHub Pages is set to “gh-pages”:
+![image](https://github.com/user-attachments/assets/1802bc78-4615-4d29-b180-9c84f3fb8d6d)
+
+> 	The message `Your site is live at: XXXX` above is your public GitHub Pages access URL.
+
+#### Step 6. Go to Settings -> Actions and wait for the first deployment to complete:
+![image](https://github.com/user-attachments/assets/e57336ef-2f35-4455-abc0-76dce07470ee)
+
+#### Step 7. Access the GitHub Pages URL to ensure the fork was successful:
+![image](https://github.com/user-attachments/assets/023c39f7-9351-4175-8c9f-5eb42e2ecdb9)
+
+> Congratulations! Deployment successful. You can now modify the configuration files with your own data. 🎉🎉🎉
+
+#### Please note that after each files modification, you need to wait for GitHub Actions to complete the `Automatic build` and `pages build and deployment` tasks.
+
+![image](https://github.com/user-attachments/assets/0ba637cc-3bb6-4458-a076-5f754c7429b3)
+
+Refresh the page for the changes to take effect. 🚀
 
 ---
 

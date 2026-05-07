@@ -12,11 +12,11 @@
 #
 # Edit the `seeds` hash below to match the plugins enabled in your config.yml.
 
-require 'digest'
 require 'json'
 require 'fileutils'
+require_relative 'plugins/Plugin'  # for Plugin.disk_cache_path
 
-dir = './.linkyee-cache'
+dir = Plugin.disk_cache_dir
 FileUtils.mkdir_p(dir)
 
 seeds = {
@@ -67,7 +67,7 @@ seeds = {
 }
 
 seeds.each do |key, value|
-  path = File.join(dir, "#{Digest::SHA1.hexdigest(key)}.json")
+  path = Plugin.disk_cache_path(key)
   File.write(path, JSON.generate(value))
   puts "  #{key.ljust(48)} -> #{File.basename(path)}"
 end
