@@ -45,13 +45,15 @@ jobs:
 
       # The committed .linkyee-cache/ ships with seed data so first-clone
       # builds work offline. But `git checkout` stamps mtime=now on every
-      # file, which makes `cache(key, ttl: 3600)` see them as fresh and
-      # never re-fetch. Age them so plugins go to the network and pull
-      # live values (star counts, latest commits, RSS, YouTube).
+      # file, which makes `cache(key, ttl: ...)` see them as fresh and
+      # never re-fetch. Age them past the longest plugin TTL (1 day) so
+      # plugins go to the network and pull live values (star counts,
+      # latest commits, RSS, YouTube). yt:resolve uses 7-day TTL — we
+      # age 8 days to clear that too, so a renamed handle gets re-resolved.
       - name: Expire plugin cache so CI fetches fresh data
         run: |
           if [ -d .linkyee-cache ]; then
-            find .linkyee-cache -type f -name '*.json' -exec touch -d "2 hours ago" {} +
+            find .linkyee-cache -type f -name '*.json' -exec touch -d "8 days ago" {} +
           fi
 
       - name: Deploy

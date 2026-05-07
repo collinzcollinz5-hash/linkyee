@@ -25,7 +25,7 @@ require 'time'
 #   {% endfor %}
 class RSSFeedPlugin < Plugin
   DEFAULT_LIMIT = 5
-  TTL = 3600
+  TTL = 86400
 
   def execute
     args.each_with_object({}) do |url, out|

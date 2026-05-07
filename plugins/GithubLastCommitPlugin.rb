@@ -19,7 +19,7 @@ require 'nokogiri'
 # Use in Liquid:
 #   Last commit: {{ vars.GithubLastCommitPlugin['ZhgChgLi/linkyee'].date }}
 class GithubLastCommitPlugin < Plugin
-  TTL = 3600
+  TTL = 86400
 
   def execute
     args.each_with_object({}) do |repo, out|

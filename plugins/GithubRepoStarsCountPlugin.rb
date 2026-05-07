@@ -15,7 +15,7 @@ require 'nokogiri'
 # unauthenticated requests at 60/hour per IP, which is fragile for
 # scheduled rebuilds. The repo page renders the star count directly.
 class GithubRepoStarsCountPlugin < Plugin
-  TTL = 3600
+  TTL = 86400
 
   def execute
     args.each_with_object({}) do |repo, out|

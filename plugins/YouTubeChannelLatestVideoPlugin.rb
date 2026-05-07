@@ -37,7 +37,7 @@ class YouTubeChannelLatestVideoPlugin < Plugin
     'title' => '', 'url' => '', 'video_id' => '',
     'thumbnail' => '', 'published' => '', 'channel' => ''
   }.freeze
-  TTL = 3600
+  TTL = 86400
 
   def execute
     args.each_with_object({}) do |input, out|
