@@ -131,43 +131,95 @@ a {
   font-size: 12px;
 }
 
-/* Dark mode */
+/* Dark mode — auto-switches via system appearance.
+   Surfaces use elevated grays (not pure #000) so cards stay distinguishable
+   from the body and OLED panels don't band. Body text is #e6edf3 rather
+   than pure white for less eye-strain at long reading times. */
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #0d1117;
-    color: white;
+    color: #e6edf3;
   }
 
   a {
-    color: white;
+    color: #e6edf3;
   }
 
   .profile-pic {
-    border-color: white;
+    border-color: #30363d;
   }
 
   .description {
-    color: #c9d1d9;
+    color: #9da7b1;
   }
 
   .link-button {
-    background-color: #21262d;
-    color: white;
+    background-color: #161b22;
+    color: #e6edf3;
+    border: 1px solid #21262d;
   }
 
   .link-button:hover {
-    background-color: #30363d;
+    background-color: #21262d;
+    border-color: #30363d;
+  }
+
+  .link-button:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: 2px;
   }
 
   .icon-button {
-    color: white;
+    color: #e6edf3;
   }
 
   .footer {
-    color: #8b949e;
+    color: #7d8590;
   }
 
   .link-button-text {
-    color: #8b949e;
+    color: #7d8590;
+  }
+}
+/* "Latest" link variant — pinned highlight + truncated long titles */
+.link-button.link-latest {
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.link-latest-badge {
+  position: absolute;
+  top: -8px;
+  left: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #1f6feb;
+  color: #fff;
+  line-height: 1.4;
+}
+.link-button.link-latest {
+  align-items: flex-start;
+}
+.link-latest .link-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+          line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  text-align: left;
+  line-height: 1.35;
+}
+@media (prefers-color-scheme: dark) {
+  .link-button.link-latest {
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+  .link-latest-badge {
+    background: #58a6ff;
+    color: #0d1117;
   }
 }

@@ -10,14 +10,17 @@
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* Dark mode — auto-switches via system appearance.
+   Same monochrome restraint, just inverted with slightly elevated grays so
+   the hairline rules and hover states are still visible against pure black. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0a0a0a;
-    --fg: #f5f5f5;
-    --muted: #9a9a9a;
-    --rule: #1f1f1f;
-    --hover: #161616;
-    --accent: #f5f5f5;
+    --bg: #0d0d0d;
+    --fg: #ededed;
+    --muted: #8a8a8a;
+    --rule: #262626;
+    --hover: #1a1a1a;
+    --accent: #ededed;
   }
 }
 
@@ -176,4 +179,30 @@ a { color: inherit; text-decoration: none; }
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* "Latest" link variant — bracket label, mono caps, single-line clamp */
+.link-button.link-latest {
+  align-items: start;
+  grid-template-columns: auto 24px 1fr auto;
+}
+.link-button.link-latest .link-text { font-weight: 500; }
+.link-latest-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin-right: 6px;
+  white-space: nowrap;
+}
+.link-latest .link-text {
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+          line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
 }

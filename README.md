@@ -2,40 +2,46 @@
 <div align="center">
 
   <!-- markdownlint-disable-next-line -->
-  # linkyee - Your Own Link Pages
+  # linkyee — Your Own Link Page
 
-  A fully customized, open-source LinkTree alternative deployed directly on GitHub Pages.
+  A fully customized, **100% free**, open-source LinkTree alternative — deployed straight to GitHub Pages.
 
   Inspired by Jekyllrb and LinkTree.
 
   [![Automatic build](../../actions/workflows/build.yml/badge.svg)](../../actions/workflows/build.yml) [![pages-build-deployment](../../actions/workflows/pages/pages-build-deployment/badge.svg)](../../actions/workflows/pages/pages-build-deployment)
 
-  [**Live Demo**→](https://link.zhgchg.li/)
+  [**Live Demo →**](https://link.zhgchg.li/)
 
   ![linkyee](https://github.com/user-attachments/assets/f6a1ac98-0f0f-485f-ae2a-9abb57a114d3)
 
 </div>
 
-[中文介紹](https://zhgchg.li/posts/70aeddb1fd9b/)
+> **In one sentence:** click *Use this template*, edit one YAML file, push — your link page is live on GitHub Pages with a free `*.github.io` domain (or your own). No SaaS, no monthly fee, no vendor lock-in. AI-assisted theming and plugin development included.
 
-- [Features](#features)
-- [Built-in Themes 🎨](#built-in-themes-)
-- [AI Style Designer 🤖](#ai-style-designer-)
-- [**Showcase✨**](#showcase-)
+## Table of contents
+
+- [Why linkyee?](#why-linkyee)
 - [Get Started – Deploy on GitHub Pages](#get-started--deploy-on-github-pages)
-- [Configuration & Customized & Automatic Redeployment](#configuration)
-- [Custom Domain](https://en.zhgchg.li/posts/483af5d93297/)
+- [Configuration](#configuration)
+- [Themes 🎨](#themes-)
+- [Plugins 🔌](#plugins-)
+- [Local testing](#local-testing)
+- [Custom Domain](#custom-domain-)
+- [Showcase ✨](#showcase-)
+- [Donate](#donate)
 
-## Features
+---
 
-- 100% Customized
-- 100% Free
-- Supports plugins and dynamic variable injection (e.g., displaying current Medium follower count, GitHub repo stars)
-- Deployed directly on GitHub Pages
-- SEO and performance optimization
-- **7 built-in themes** out of the box — switch by editing one line in `config.yml`
-- **AI Style Designer** — describe the look you want in plain English and Claude Code generates a custom theme for you (powered by [`huashu-design`](https://github.com/alchaincyf/huashu-design) principles)
-- Local preview helper (`./preview.sh <theme>`) to A/B compare themes before deploying
+## Why linkyee?
+
+- **100% free.** Hosted on GitHub Pages. No subscriptions, no ads, no upsells.
+- **100% yours.** Your config, themes, plugins, and content live in your own GitHub repo. Take it offline whenever you want.
+- **7 ready-made themes** — switch by editing a single line in `config.yml`.
+- **AI Style Designer.** Describe the look you want in plain English; the bundled [`linkyee-style-designer`](./.claude/skills/linkyee-style-designer/SKILL.md) Claude skill writes the full theme for you (HTML + CSS + JS).
+- **6 built-in plugins** for live data — GitHub stars, last commit, profile stats, RSS/Atom feeds, date countdowns, latest YouTube video.
+- **AI Plugin Builder.** Want data from somewhere else? Describe the source; the bundled [`linkyee-plugin-builder`](./.claude/skills/linkyee-plugin-builder/SKILL.md) skill writes the Ruby plugin and wires it in.
+- **SEO + accessibility built-in.** WCAG AA contrast, dark mode, responsive down to 320 px, OG/Twitter meta, keyboard-friendly focus states.
+- **Local preview with auto-rebuild.** `./preview.sh` rebuilds on save; refresh the browser, no plugins needed.
 
 ### Buy me a beer ❤️❤️❤️
 
@@ -44,60 +50,6 @@
 [**If this project has helped you, feel free to sponsor me a cup of coffee, thank you.**](https://www.paypal.com/ncp/payment/CMALMPT8UUTY2)
 
 Feel free to open an issue or submit a fix/contribution via pull request. :)
-
----
-
-## Built-in Themes 🎨
-
-linkyee ships with **7 ready-to-use themes**. Switch by changing one line in `config.yml`:
-
-```yaml
-theme: minimal-mono   # or any other theme name from the list below
-```
-
-| Slug | Aesthetic |
-|---|---|
-| `default` | The original linkyee look — clean light/dark cards |
-| `minimal-mono` | Swiss minimal: monospace, hairline rules, generous whitespace |
-| `editorial-serif` | Magazine-style: serif headlines, drop cap, two-tone palette |
-| `neo-brutalism` | Thick borders, hard offset shadows, primary colors |
-| `glassmorphism` | Frosted-glass cards on a soft warm-cool gradient |
-| `terminal-retro` | Green-on-black CRT terminal with scanlines and blinking caret |
-| `paper-card` | Soft pastel background, rounded cards, friendly accents |
-
-All built-in themes meet the same baseline: WCAG AA contrast, working dark mode, responsive down to 320px, keyboard-accessible focus states, and `prefers-reduced-motion` support.
-
-**Want to compare them locally before committing?** See [Preview themes locally](#preview-themes-locally) below.
-
----
-
-## AI Style Designer 🤖
-
-Don't see a theme you like? Describe the style you want in plain English and let Claude Code generate a custom theme for you.
-
-This repo includes a Claude skill at [`.claude/skills/linkyee-style-designer/SKILL.md`](./.claude/skills/linkyee-style-designer/) that teaches the agent:
-
-- linkyee's theme directory contract and the Liquid variables it must preserve
-- A "no AI slop" design baseline (no purple-pink gradients, no emoji-as-icons, real typographic hierarchy, accessibility minimums)
-- A step-by-step workflow: read your `config.yml` → confirm direction → generate `themes/<your-theme>/` → wire it up → run the build to verify
-
-**How to use it:**
-
-1. Install [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and open this repo with it.
-2. Just ask in natural language. Examples:
-   - *"Design a linkyee theme inspired by 1960s Penguin paperback covers."*
-   - *"Make my links look like a Japanese ryokan website — quiet, elegant, lots of negative space."*
-   - *"I want a vaporwave aesthetic but keep it accessible."*
-3. Claude reads your config, asks clarifying questions if the brief is vague, generates the theme files, switches `config.yml` to it, and runs the build.
-4. Run `./preview.sh <new-theme-name>` to see the result locally.
-
-**Want even richer design tooling?** Install the upstream [`huashu-design`](https://github.com/alchaincyf/huashu-design) skill alongside it for deeper design philosophy, animation, and export tooling:
-
-```bash
-npx skills add alchaincyf/huashu-design
-```
-
-The linkyee skill defers to `huashu-design` when both are installed.
 
 ---
 
@@ -138,215 +90,212 @@ After selecting, click the Save button to save your changes.
 
 > Congratulations! Deployment successful. You can now modify the configuration files with your own data. 🎉🎉🎉
 
-### Configuration
-Edit The [config.yml](./config.yml) file located in the root directory.
-
-```yaml
-# Site Configuration
-
-# Theme, mapped to the directory: ./theme/xxxx
-theme: default
-
-# HTML Language setting
-lang: "en"
-
-# Plugins, implemented in ./plugins/PLUGIN_NAME
-# Use {{ vars.PLUGIN_NAME }} in the settings below
-
-# The output of the plugin can be used below, e.g., {{vars.GithubRepoStarsCountPlugin}}
-plugins:
-  # Automatically fetch Github repo star count
-  - GithubRepoStarsCountPlugin:
-      - ZhgChgLi/ZMarkupParser
-      - ZhgChgLi/ZReviewTender
-      - ZhgChgLi/ZMediumToMarkdown
-      - ZhgChgLi/linkyee
-
-# Google Analytics tracking id
-google_analytics_id:
-
-# Google Analytics tracking id
-google_analytics_id:
-
-# HTML Title
-title: "ZhgChgLi's Links"
-
-# Avatar image path
-avatar: "./images/profile.jpeg"
-
-# Name section text
-name: "@zhgchgli"
-
-# Tagline section text
-tagline: >-
-    An iOS, web, and automation developer from Taiwan 🇹🇼 who also loves sharing, traveling, and writing.
-
-# List of links
-# icon: Use Font Awesome icons (https://fontawesome.com/search?o=r&m=free)
-# text: The displayed text for the link
-# title: The url title
-# url: The URL of the link
-# alt: Alternative text for accessibility
-# target: `_blank` opens in a new tab, `_self` opens in the same frame
-links:
-  - link:
-      icon: "fa-brands fa-medium"
-      text: "Tech Blog <span class='link-button-text'>(100+ Posts)</span>"
-      url: "https://blog.zhgchg.li"
-      alt: "ZhgChgLi's Tech Blog"
-      title: "ZhgChgLi's Tech Blog"
-      target: "_blank"
-  - link:
-      icon: "fa-brands fa-medium"
-      text: "Travelog <span class='link-button-text'>(10+ Posts)</span>"
-      url: "https://medium.com/ztravel"
-      alt: "ZhgChgLi's Travelog"
-      title: "ZhgChgLi's Travelog"
-      target: "_blank"
-  - link:
-      icon: "fa-solid fa-rss"
-      text: "Website"
-      url: "https://zhgchg.li/"
-      alt: "ZhgChgLi's Website"
-      title: "ZhgChgLi's Website"
-      target: "_blank"
-  - link:
-      icon: "fa-brands fa-swift"
-      text: "ZMarkupParser <span class='link-button-text'>({{vars.GithubRepoStarsCountPlugin['ZhgChgLi/ZMarkupParser']}} Stars)</span>"
-      url: "https://github.com/ZhgChgLi/ZMarkupParser"
-      alt: "ZMarkupParser is a pure-Swift library that helps you to convert HTML strings to NSAttributedString with customized style and tags."
-      title: "ZMarkupParser is a pure-Swift library that helps you to convert HTML strings to NSAttributedString with customized style and tags."
-      target: "_blank"
-  - link:
-      icon: "fa-brands fa-app-store-ios"
-      text: "ZReviewTender <span class='link-button-text'>({{vars.GithubRepoStarsCountPlugin['ZhgChgLi/ZReviewTender']}} Stars)</span>"
-      url: "https://github.com/ZhgChgLi/ZReviewTender"
-      alt: "ZReviewTender is a tool for fetching app reviews from the App Store and Google Play Console and integrating them into your workflow."
-      title: "ZReviewTender is a tool for fetching app reviews from the App Store and Google Play Console and integrating them into your workflow."
-      target: "_blank"
-  - link:
-      icon: "fa-brands fa-markdown"
-      text: "ZMediumToMarkdown <span class='link-button-text'>({{vars.GithubRepoStarsCountPlugin['ZhgChgLi/ZMediumToMarkdown']}} Stars)</span>"
-      url: "https://github.com/ZhgChgLi/ZMediumToMarkdown"
-      alt: "ZMediumToMarkdown is a powerful tool that allows you to effortlessly download and convert your Medium posts to Markdown format."
-      title: "ZMediumToMarkdown is a powerful tool that allows you to effortlessly download and convert your Medium posts to Markdown format."
-      target: "_blank"
-  - link:
-      icon: "fa-brands fa-github"
-      text: "linkyee <span class='link-button-text'>({{vars.GithubRepoStarsCountPlugin['ZhgChgLi/linkyee']}} Stars)</span>"
-      url: "https://github.com/ZhgChgLi/linkyee"
-      alt: "linkyee is a fully customized, open-source LinkTree alternative deployed directly on GitHub Pages."
-      title: "linkyee is a fully customized, open-source LinkTree alternative deployed directly on GitHub Pages."
-      target: "_blank"
-
-
-# List of social media links
-# icon: Use Font Awesome icons (https://fontawesome.com/search?o=r&m=free)
-# title: The url title
-# url: The URL of the social media link
-# alt: Alternative text for accessibility
-# target: _blank opens in a new tab, _self opens in the same frame
-socials:
-  - social:
-      icon: "fa-brands fa-medium"
-      url: "https://blog.zhgchg.li"
-      title: "ZhgChgLi's Medium"
-      alt: "ZhgChgLi's Medium"
-      target: "_blank"
-  - social:
-      icon: "fa-brands fa-github"
-      url: "https://github.com/ZhgChgLi"
-      title: "ZhgChgLi's GitHub"
-      alt: "ZhgChgLi's GitHub"
-      target: "_blank"
-  - social:
-      icon: "fa-brands fa-twitter"
-      url: "https://twitter.com/zhgchgli"
-      title: "ZhgChgLi's Twitter"
-      alt: "ZhgChgLi's Twitter"
-      target: "_blank"
-  - social:
-      icon: "fa-brands fa-linkedin"
-      url: "https://www.linkedin.com/in/zhgchgli/"
-      title: "ZhgChgLi's LinkedIn"
-      alt: "ZhgChgLi's LinkedIn"
-      target: "_blank"
-  - social:
-      icon: "fa-brands fa-instagram"
-      url: "https://www.instagram.com/zhgchgli/"
-      title: "Instagram"
-      alt: "ZhgChgLi's Instagram"
-      target: "_blank"
-  - social:
-      icon: "fa-solid fa-envelope"
-      url: "mailto:zhgchgli@gmail.com"
-      title: "Email: zhgchgli@gmail.com"
-      alt: "zhgchgli@gmail.com"
-      target: "_blank"
-
-# Footer text
-footer: >
-    Welcome to my website! Follow me on Medium or GitHub, or stay connected on Instagram or LinkedIn.
-
-# Footer copyright message
-# Linkyee is a 100% free, open-source project—feel free to modify the copyright message as you like. :)
-copyright: >
-  © 2024  <a href="https://zhgchg.li" target="_blank">ZhgChgLi</a>. Powered by <a href="https://github.com/ZhgChgLi/linkyee" target="_blank">linkyee</a>
-```
-
 #### Please note that after each files modification, you need to wait for GitHub Actions to complete the `Automatic build` and `pages build and deployment` tasks.
 
 ![image](https://github.com/user-attachments/assets/0ba637cc-3bb6-4458-a076-5f754c7429b3)
 
 Refresh the page for the changes to take effect. 🚀
 
-### Customized
+---
 
-#### Pick a Built-in Theme (easiest)
+## Configuration
 
-Edit `config.yml` and set `theme:` to any directory under `./themes/`:
+Everything that ends up on your page is driven by a single file: [`config.yml`](./config.yml). It's a Liquid-rendered YAML file with five top-level sections:
 
 ```yaml
-theme: editorial-serif
+theme: default                     # ← directory under ./themes/
+lang: "en"
+
+plugins:                           # ← optional dynamic data fetched at build time
+  - GithubRepoStarsCountPlugin: [ZhgChgLi/linkyee]
+
+title: "Your Name"                 # ← profile header
+avatar: "./images/profile.jpeg"
+name: "@yourhandle"
+tagline: "One line about you."
+
+links:                             # ← buttons in the link list
+  - link:
+      icon: "fa-brands fa-github"
+      text: "GitHub ({{ vars.GithubRepoStarsCountPlugin['ZhgChgLi/linkyee'] }} ⭐)"
+      url: "https://github.com/yourname"
+      target: "_blank"
+
+socials: [ ... ]                   # ← icon-only social row
+footer: "Free-form HTML."
+copyright: "© 2026 You."
 ```
 
-Available out of the box: `default`, `minimal-mono`, `editorial-serif`, `neo-brutalism`, `glassmorphism`, `terminal-retro`, `paper-card`. See [Built-in Themes](#built-in-themes-) for descriptions.
+The shipped [`config.yml`](./config.yml) is a fully working example that exercises **every built-in plugin** — read it as the canonical reference. Edit fields in place, push, wait for GitHub Actions to rebuild, refresh.
 
-#### Generate a Custom Theme with AI (recommended for fresh designs)
+### Automatic redeployment
 
-Open the repo in [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and describe what you want. The bundled [`linkyee-style-designer`](./.claude/skills/linkyee-style-designer/) skill does the rest. See [AI Style Designer](#ai-style-designer-) above.
+The site rebuilds automatically once a day so plugin output (star counts, latest posts, etc.) stays fresh. The cron lives in [`build.yml`](../../actions/workflows/build.yml):
 
-#### Preview themes locally
+```yaml
+schedule:
+    - cron: '0 0 * * *'   # daily at 00:00 UTC
+```
+
+Delete the `schedule:` block if you don't want scheduled redeploys.
+
+---
+
+## Themes 🎨
+
+linkyee ships **7 built-in themes** designed to be drop-in usable. Switch by editing one line in `config.yml`:
+
+```yaml
+theme: minimal-mono   # any directory under ./themes/
+```
+
+| Slug | Light | Dark | Aesthetic / good for |
+|---|---|---|---|
+| `default` | <img width="200" alt="default light" src="./themes/default/preview-light.png"> | <img width="200" alt="default dark" src="./themes/default/preview-dark.png"> | Clean cards · safe default for anyone |
+| `minimal-mono` | <img width="200" alt="minimal-mono light" src="./themes/minimal-mono/preview-light.png"> | <img width="200" alt="minimal-mono dark" src="./themes/minimal-mono/preview-dark.png"> | Swiss minimal · monospace · engineers, writers |
+| `editorial-serif` | <img width="200" alt="editorial-serif light" src="./themes/editorial-serif/preview-light.png"> | <img width="200" alt="editorial-serif dark" src="./themes/editorial-serif/preview-dark.png"> | Magazine serif · drop cap · bloggers, journalists |
+| `neo-brutalism` | <img width="200" alt="neo-brutalism light" src="./themes/neo-brutalism/preview-light.png"> | <img width="200" alt="neo-brutalism dark" src="./themes/neo-brutalism/preview-dark.png"> | Thick borders · primary colors · indie devs, artists |
+| `glassmorphism` | <img width="200" alt="glassmorphism light" src="./themes/glassmorphism/preview-light.png"> | <img width="200" alt="glassmorphism dark" src="./themes/glassmorphism/preview-dark.png"> | Frosted glass cards · designers, agencies |
+| `paper-card` | <img width="200" alt="paper-card light" src="./themes/paper-card/preview-light.png"> | <img width="200" alt="paper-card dark" src="./themes/paper-card/preview-dark.png"> | Pastel cards · rounded · creators, illustrators |
+| `terminal-retro` | — *(dark-first)* | <img width="200" alt="terminal-retro dark" src="./themes/terminal-retro/preview-dark.png"> | Green-on-black CRT · scanlines · hackers, infosec |
+
+Every built-in theme meets the same baseline: WCAG AA contrast, **dark mode that auto-switches with your system appearance** (no manual toggle), responsive down to 320 px, keyboard-accessible focus states, and `prefers-reduced-motion` support.
+
+To try them locally before committing, see [Local testing](#local-testing). To regenerate the preview screenshots above after any visual change, run `./scripts/screenshot-themes.sh` (requires `npx playwright`).
+
+### Modifying a theme by hand
+
+Each theme lives at `./themes/<theme-name>/` with three files:
+
+- `index.html` — Liquid template (consumes `config.yml`)
+- `styles.css` — the look
+- `scripts.js` — can be empty, but the file must exist
+
+The `default` theme self-hosts Font Awesome under `themes/default/fontawesome/`. The other built-ins load Font Awesome from a CDN to keep theme directories small.
+
+### 🤖 AI Style Designer — generate a theme by description
+
+Don't see a vibe you like? Describe it in plain English and the bundled [`linkyee-style-designer`](./.claude/skills/linkyee-style-designer/SKILL.md) Claude skill writes a full theme for you.
+
+**How to use it:**
+
+1. Install [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and open this repo with it.
+2. Ask in natural language. Examples:
+
+   > *"Design a linkyee theme inspired by 1960s Penguin paperback covers."*
+   >
+   > *"Make my links look like a Japanese ryokan website — quiet, elegant, lots of negative space."*
+   >
+   > *"I want a vaporwave aesthetic but keep it accessible."*
+3. The skill reads your `config.yml`, asks clarifying questions if the brief is vague, generates `themes/<your-theme>/`, switches `theme:` in `config.yml`, and runs the build.
+4. Run `./preview.sh <new-theme>` to see the result locally.
+
+The skill enforces the same quality bar as the built-in themes: no AI slop (no unwarranted purple-pink gradients, no emoji-as-icons, no centered-everything-no-hierarchy), real typographic hierarchy, accessibility minimums, and **strict RWD** — mobile-first, ≥44 px tap targets, no horizontal scroll at 320 px.
+
+**Deeper design tooling.** If you want a richer designer experience (multi-direction exploration, expert review, animation export), install the upstream [`huashu-design`](https://github.com/alchaincyf/huashu-design) skill alongside it. The linkyee skill defers to `huashu-design` when both are present.
+
+---
+
+## Plugins 🔌
+
+Plugins are tiny Ruby classes that fetch data **at build time** and inject it into your page. Use them to render live values inside any link, the tagline, or the footer — anything that's a Liquid string.
+
+### Built-in plugins
+
+| Plugin | What it emits | Reference shape |
+|---|---|---|
+| `GithubRepoStarsCountPlugin` | Star count for one or more repos | `{{ vars.GithubRepoStarsCountPlugin['owner/repo'] }}` |
+| `GithubLastCommitPlugin` | Latest commit `sha` / `date` / `message` | `{{ vars.GithubLastCommitPlugin['owner/repo'].date }}` |
+| `GithubProfilePlugin` | `followers` / `following` / `repos` | `{{ vars.GithubProfilePlugin['user'].followers }}` |
+| `RSSFeedPlugin` | Latest items (Medium / blog / podcast / YouTube feeds) | `{{ vars.RSSFeedPlugin['url'][0].title }}` |
+| `CountdownPlugin` | Days until / since a target date | `{{ vars.CountdownPlugin.label.days }}` |
+| `YouTubeChannelLatestVideoPlugin` | Latest video — title, URL, thumbnail | `{{ vars.YouTubeChannelLatestVideoPlugin['@handle'].title }}` |
+
+Enable in `config.yml`:
+
+```yaml
+plugins:
+  - GithubRepoStarsCountPlugin:
+      - ZhgChgLi/linkyee
+  - RSSFeedPlugin:
+      - https://yourblog.example/feed.xml
+```
+
+…then reference the result anywhere a Liquid string is rendered:
+
+```yaml
+links:
+  - link:
+      icon: "fa-brands fa-github"
+      text: "linkyee ({{ vars.GithubRepoStarsCountPlugin['ZhgChgLi/linkyee'] }} ⭐)"
+      url: "https://github.com/ZhgChgLi/linkyee"
+```
+
+If a plugin fails at build time (network error, API change, expired token, …) the build still succeeds — the value renders empty and the failure is logged in GitHub Actions output. Your site never breaks because of a flaky external API.
+
+### 🤖 AI Plugin Builder — generate a plugin by description
+
+Want data linkyee doesn't ship out of the box? Open the repo with [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) and describe what you want. The bundled [`linkyee-plugin-builder`](./.claude/skills/linkyee-plugin-builder/SKILL.md) skill knows the plugin contract.
+
+**Examples:**
+
+> *"Add a plugin that shows my 3 latest posts from medium.com/@myhandle as new links."*
+>
+> *"Fetch the current weather in Taipei from wttr.in and show the temp in the footer."*
+>
+> *"Add a plugin that pulls my Steam total playtime via the Steam Web API."*
+
+The skill will:
+
+1. Confirm the data source and shape with you.
+2. Generate `plugins/<YourPlugin>.rb` (using the base-class HTTP/JSON/cache helpers — no raw `Net::HTTP`).
+3. Wire it into `config.yml` under `plugins:` and reference the output where you asked it to appear.
+4. Run `bundle exec ruby ./scaffold.rb` and verify the value rendered in `_output/index.html`.
+
+### Developer wiki
+
+For the full plugin contract — base-class helpers, common patterns (HTTP, JSON, scrape, cache), Liquid rendering rules, and debugging tips — read **[`plugins/README.md`](./plugins/README.md)**. It's the canonical reference the AI skill loads when it generates a plugin.
+
+---
+
+## Local testing
+
+Build and serve the site on `http://localhost:8080`:
 
 ```bash
-./preview.sh minimal-mono       # build with minimal-mono and serve on http://localhost:8080
-./preview.sh                    # build with whatever theme is currently set in config.yml
+./preview.sh                    # build with the theme currently set in config.yml
+./preview.sh minimal-mono       # temporarily switch to <theme-name>, build, serve;
+                                # restores config.yml on Ctrl-C
+PORT=4000 ./preview.sh          # use a different port
 ```
 
-The script temporarily switches `config.yml` to the requested theme, runs the build, and serves `_output/` on port 8080. On `Ctrl-C` it restores `config.yml` to the original theme — your committed config is never modified.
+When you pass a theme argument, `preview.sh` makes a backup of your `config.yml`, switches to the requested theme for the session, and restores the original on `Ctrl-C` — your committed config is never modified.
 
-#### Modify a Theme by Hand
+### Auto-rebuild on save
 
-- `./themes/<theme-name>/index.html`
-- `./themes/<theme-name>/styles.css`
-- `./themes/<theme-name>/scripts.js`
+While the preview is running, `preview.sh` watches:
 
-The `default` theme self-hosts Font Awesome under `themes/default/fontawesome/`. The other built-in themes load Font Awesome via CDN to keep theme directories small.
+- `themes/`
+- `plugins/`
+- `config.yml`
+- `scaffold.rb`
 
-#### Automatic Redeployment
+Any change triggers an instant rebuild — just refresh the browser. Install [`fswatch`](https://github.com/emcrisostomo/fswatch) (`brew install fswatch` on macOS) for sub-second reaction; otherwise it falls back to a 1-second polling loop that works without any extra dependencies.
 
-By default, the project redeploys automatically once a day to refresh the values of plugin's dynamic variables. You can adjust the [cron](https://crontab.guru/#0_0_*_*_*) settings in [build.yml](../../actions/workflows/build.yml):
-```
-schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight (00:00 UTC)
-```
-If you don’t need scheduled redeployment, simply delete the schedule block.
+If a build fails (e.g. a broken Liquid reference), the watcher prints the error and keeps running — fix the issue, save again, the next save rebuilds.
+
+### Requirements
+
+- Ruby (`bundle install` once to fetch `liquid` and `nokogiri`)
+- Python 3 (or Ruby) for the static file server `preview.sh` spawns
+
+---
 
 ## Custom Domain ❤️❤️❤️
 
 You can set a custom GitHub Pages domain, such as my own: [https://link.zhgchg.li](https://link.zhgchg.li).
 
-Follow [my tutorial for domain binding.](https://en.zhgchg.li/posts/zrealm-dev/github-pages-custom-domain-setup-replace-github-io-with-your-own-domain-483af5d93297) If you’d like, you can [purchase a domain through my Namecheap referral](https://namecheap.pxf.io/P0jdZQ) link—I’ll earn a small commission, which will help me continue contributing to open-source projects.
+Follow [my tutorial for domain binding.](https://en.zhgchg.li/posts/zrealm-dev/github-pages-custom-domain-setup-replace-github-io-with-your-own-domain-483af5d93297) If you'd like, you can [purchase a domain through my Namecheap referral](https://namecheap.pxf.io/P0jdZQ) link — I'll earn a small commission, which helps me keep contributing to open-source projects.
 
 ---
 
@@ -381,4 +330,3 @@ Real websites built with **linkyee** — fast, clean, and open-source.
 - [XCFolder](https://github.com/ZhgChgLi/XCFolder) is a powerful command-line tool that converts Xcode virtual groups into actual directories, reorganizing your project structure to align with Xcode groups and enabling seamless integration with modern Xcode project generation tools like Tuist and XcodeGen.
 - [ZReviewTender](https://github.com/ZhgChgLi/ZReviewTender) is a tool for fetching app reviews from the App Store and Google Play Console and integrating them into your workflow.
 - [ZMediumToMarkdown](https://github.com/ZhgChgLi/ZMediumToMarkdown) is a powerful tool that allows you to effortlessly download and convert your Medium posts to Markdown format.
-

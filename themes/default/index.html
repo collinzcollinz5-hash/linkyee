@@ -40,7 +40,7 @@
   <meta name="theme-color" content="#ffffff">
 
 
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v={{ last_modified_at }}" />
 </head>
 <body>
   <div class="container">
@@ -53,8 +53,9 @@
     <div class="links">
       {% for item in links %}
         {% assign link = item.link %}
-        <a href="{{ link.url }}" target="{{ link.target }}" class="link-button" alt="{{ link.alt }}" title="{{ link.title }}">
-          <i class="{{ link.icon }}"></i> {{ link.text }}
+        <a href="{{ link.url }}" target="{{ link.target }}" class="link-button{% if link.latest %} link-latest{% endif %}" alt="{{ link.alt }}" title="{{ link.title }}">
+          {% if link.latest %}<span class="link-latest-badge" aria-hidden="true">LATEST</span>{% endif %}
+          <i class="{{ link.icon }}"></i> <span class="link-text">{{ link.text }}</span>
         </a>
       {% endfor %}
     </div>
@@ -75,7 +76,7 @@
       <div class="copyright">{{ copyright }}</div>
     </footer>
   </div>
-  <script src="fontawesome/js/all.js" data-auto-replace-svg="nest"></script>
+  <script src="fontawesome/js/all.js?v={{ last_modified_at }}" data-auto-replace-svg="nest"></script>
   {% if google_analytics_id %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
@@ -87,6 +88,6 @@
       gtag('config', '{{ google_analytics_id }}');
     </script>
   {% endif %}
-  <script src="./scripts.js"></script>
+  <script src="./scripts.js?v={{ last_modified_at }}"></script>
 </body>
 </html>

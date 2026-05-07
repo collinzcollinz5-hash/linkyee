@@ -78,10 +78,74 @@ Distilled from [`alchaincyf/huashu-design`](https://github.com/alchaincyf/huashu
 
 **Quality bar every theme must meet:**
 - WCAG AA contrast on body text and button text
-- Functional in both light and dark mode (either via `@media (prefers-color-scheme: dark)` overrides, or a single palette that works in both)
-- Responsive down to 320px width with no horizontal scroll
 - Keyboard-accessible: visible `:focus-visible` styles on every link and button
 - Respects `@media (prefers-reduced-motion: reduce)` if you use any motion (disable transitions/animations in that block)
+- **Dark mode (auto-switch): see the dedicated section below — non-negotiable.**
+- **Responsive (RWD): see the dedicated section below — non-negotiable, this is the single most common failure mode.**
+
+## Dark mode — required, auto-switch only
+
+Every theme must work in both system appearances. The user does not click a button — the OS toggles between light and dark and the theme MUST follow. This is non-negotiable and a frequent source of regressions, so verify it explicitly.
+
+**Hard rules:**
+
+- Auto-switch via `@media (prefers-color-scheme: dark) { ... }` only. **No** JavaScript toggle. **No** `color-scheme: light only` (that disables auto-switching). **No** `<html data-theme="…">` workaround. The user's macOS / iOS / Windows / Android system setting is the source of truth.
+- **Don't just invert.** Define a separate dark palette. Pure `#000` background causes banding on OLED panels and gives nothing for shadows or borders to push against — use elevated grays from the `#0d1117 / #14110d / #1c1814` family. White-on-black body text is harsh — prefer `#e6edf3 / #f3ecdf` etc.
+- **Re-tune accents.** A red that reads on cream often goes muddy on charcoal; a soft pastel disappears. Test each accent color against the dark surface and either brighten/desaturate or pick a sibling hue. Both modes need WCAG AA (4.5:1 body, 3:1 large) — re-check on dark, don't assume.
+- **Surface hierarchy still has to read.** On dark, cards / link buttons need to be one step lighter than the body (e.g. body `#0d1117`, card `#161b22`). Borders that were `rgba(0,0,0,0.12)` on light should drop in opacity, not just flip color.
+- **Don't lose the signature move.** A brutalist drop-shadow in pure black disappears on a dark page — switch the shadow to a neon (cyan / yellow) on dark. A frosted glass card needs a different blur tint on a dark gradient. Keep the theme's identity in both modes; redesign the trick instead of dropping it.
+- **Latest-link badge** (`.link-latest-badge`) must be re-tuned per mode. The light-mode color usually doesn't read on the dark surface — add a `@media (prefers-color-scheme: dark) { .link-latest-badge { ... } }` override.
+- **Focus rings.** A `#1f6feb` ring that pops on white may need to brighten to `#58a6ff` on dark. Don't share `:focus-visible` styling blindly across modes.
+
+**Authoring patterns:**
+
+- Prefer **CSS-vars-driven palette swap**: define `:root { --bg: ...; --fg: ...; ... }` once, then `@media (prefers-color-scheme: dark) { :root { --bg: ...; ... } }` only changes the values. The rest of the CSS reads `var(--bg)` etc. and never needs duplicate rules. This is the cleanest pattern and the one most built-in themes use.
+- Per-rule overrides are acceptable when only a few properties change (e.g. `default` theme), but the vars approach scales better.
+- `terminal-retro` is the **dark-first reference**: its base palette (green-on-black CRT) already works for both system modes, so it has no `@media` block at all. A short comment in `styles.css` explains why. If a new theme is intentionally dark-only (terminal, hacker, neon, vaporwave-dark), do the same — don't fake a light mode that betrays the genre.
+
+**Verification (do not skip):**
+
+After your edits, before declaring the theme done:
+
+1. Run `bundle exec ruby ./scaffold.rb` then open `_output/index.html`.
+2. Toggle macOS *System Settings → Appearance* between Light and Dark (or use DevTools → Rendering → "Emulate CSS prefers-color-scheme"). The page must swap palettes without refresh.
+3. In each mode, confirm: body text ≥ 4.5:1 contrast against background, latest-badge readable, focus ring visible, signature move (shadow / glass / drop cap / scanlines) still has identity.
+4. If you used `./scripts/screenshot-themes.sh` or generated screenshots, capture both light and dark and compare side-by-side. Two visually-identical screenshots means the dark CSS is broken — investigate before shipping.
+
+## Responsive design (RWD) — required
+
+linkyee is overwhelmingly viewed on phones. A theme that looks great at 1440px but breaks at 360px is a broken theme. Treat the small-screen pass as part of "the theme is done", not a polish step.
+
+**Layout rules:**
+- **Mobile-first.** Author the base CSS for ~360px-wide phones; layer up with `min-width` media queries for tablet/desktop refinements. Don't write desktop-first then patch with `max-width` queries.
+- **Container width:** use `width: 100%` with a `max-width` (e.g. 480–640px for the link column). Never set fixed pixel widths on top-level containers.
+- **No horizontal scroll at any width 320–1920px.** If something would overflow (long unbroken strings like URLs, RSS post titles, repo names), use `overflow-wrap: anywhere` or `text-overflow: ellipsis` with `white-space: nowrap` — pick one per element and stick with it.
+- **Test at minimum these widths:** 320, 375, 414, 768, 1024, 1440. Eyeball each. If you used `huashu-design` or any preview/screenshot capability, capture at 375 and 1280 at minimum.
+
+**Typography:**
+- Use `clamp()` for headline/name sizes so they scale fluidly without breakpoint jumps, e.g. `font-size: clamp(1.6rem, 5vw, 2.4rem)`.
+- Body text floor of 16px on mobile (smaller triggers iOS auto-zoom on inputs and is below WCAG comfort threshold).
+- Long Latest-link titles (RSS feed posts, YouTube video titles) can be 60+ chars — clamp them. The standard pattern: `.link-latest .link-text { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }` Adapt the badge per theme but keep the truncation.
+
+**Touch targets:**
+- Minimum 44×44 CSS px hit area for every link, button, and social icon (Apple HIG / WCAG 2.5.5). Pad with `padding`, not just `height`, so the tappable area scales.
+- Minimum 8px gap between adjacent tappable elements (no rage-tap collisions).
+
+**Images / media:**
+- `max-width: 100%; height: auto` on every `<img>`, including the avatar. The avatar should be a `clamp()`-sized circle so it doesn't dominate small viewports.
+- Don't use `background-image` for content images — they don't scale predictably across DPRs.
+
+**Density / safe areas:**
+- Use `padding: env(safe-area-inset-top) ... env(safe-area-inset-bottom)` on the outermost container if you have edge-to-edge color, so notched iPhones don't crop content.
+- Reduce vertical padding on small viewports — what looks airy on desktop looks wasted on a 568px-tall iPhone SE.
+
+**Verification step (do not skip):**
+After running `bundle exec ruby ./scaffold.rb`, also do one of the following before declaring the theme done:
+1. `./preview.sh <new-theme>` and resize the browser through 320 → 1440 manually, OR
+2. Use Playwright/headless browser at minimum 375×667 and 1280×800, OR
+3. Open `_output/index.html` and toggle DevTools device mode through iPhone SE, iPhone 14, iPad, desktop.
+
+If any of: horizontal scroll appears, text overflows the container, tap targets shrink below 44px, or the avatar covers more than ~30% of viewport height — fix before reporting back.
 
 ## When the user's brief is vague
 
