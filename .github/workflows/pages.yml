@@ -24,7 +24,7 @@ jobs:
 
       - name: Build site
         run: |
-          ruby scaffold.rb
+          bundle exec ruby scaffold.rb
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
