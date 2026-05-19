@@ -21,6 +21,8 @@ English | [繁體中文](./README.zh-TW.md)
 
 > **In one sentence:** click *Use this template*, edit one YAML file, push — your link page is live on GitHub Pages with a free `*.github.io` domain (or your own). No SaaS, no monthly fee, no vendor lock-in. AI-assisted theming and plugin development included.
 
+**Quick publish:** this repository includes a GitHub Actions workflow that builds the site with `ruby scaffold.rb` and publishes the generated `_output/` to GitHub Pages on every push to `main` — see `.github/workflows/pages.yml`.
+
 ## Table of contents
 
 - [Why linkyee?](#why-linkyee)
