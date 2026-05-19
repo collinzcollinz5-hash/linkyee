@@ -4,15 +4,10 @@ on:
   push:
     branches: [ main ]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build static site
+    name: Build static site and deploy to gh-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,18 +26,10 @@ jobs:
         run: |
           ruby scaffold.rb
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v2
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: _output
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy to GitHub Pages
-    steps:
-      - name: Deploy
-        uses: actions/deploy-pages@v1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_output
+          publish_branch: gh-pages
+          clean: true
